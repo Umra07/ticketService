@@ -1,8 +1,10 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 
 public class Ticket {
@@ -20,12 +22,12 @@ public class Ticket {
 
     // default constructor
     Ticket() {
-        creationTime = getCreationTime();
+        creationTime = getFormattedCreationTime();
     }
 
     // limited constructor
     Ticket(String eventId, String eventConcertHall, int eventCodeValue) {
-        creationTime = getCreationTime();
+        creationTime = getFormattedCreationTime();
 
         /* validators */
         validateEventId(eventId);
@@ -39,7 +41,7 @@ public class Ticket {
 
     // full constructor
     Ticket(String eventId, String eventConcertHall, int eventCodeValue, int eventDuration, boolean isEventPromo, StadiumSector eventSector, float eventBackpackWeightLimit, float eventPrice) {
-        creationTime = getCreationTime();
+        creationTime = getFormattedCreationTime();
 
         /* validators */
         validateEventId(eventId);
@@ -81,8 +83,11 @@ public class Ticket {
         }
     }
 
-    private String getCreationTime() {
-        return DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, plLocale).format(new Date());
+    private String getFormattedCreationTime() {
+        ZoneId zone = ZoneId.of("Europe/Warsaw");
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM).withLocale(plLocale).withZone(zone);
+
+        return formatter.format(Instant.now());
     }
 
     public String toString() {
