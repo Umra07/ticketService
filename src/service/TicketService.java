@@ -1,3 +1,8 @@
+package service;
+
+import enums.StadiumSector;
+import model.Ticket;
+
 import java.util.Random;
 
 public class TicketService {
@@ -23,3 +28,4 @@ public class TicketService {
         return random.nextInt(TicketService.MAX_VALUE - TicketService.MIN_VALUE + 1) + TicketService.MIN_VALUE;
     }
 }
+

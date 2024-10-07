@@ -1,3 +1,7 @@
+package model;
+
+import enums.StadiumSector;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -21,12 +25,12 @@ public class Ticket {
     private String price;
 
     // default constructor
-    Ticket() {
+    public Ticket() {
         creationTime = getFormattedCreationTime();
     }
 
     // limited constructor
-    Ticket(String eventId, String eventConcertHall, int eventCodeValue) {
+    public Ticket(String eventId, String eventConcertHall, int eventCodeValue) {
         creationTime = getFormattedCreationTime();
 
         /* validators */
@@ -40,7 +44,7 @@ public class Ticket {
     }
 
     // full constructor
-    Ticket(String eventId, String eventConcertHall, int eventCodeValue, int eventDuration, boolean isEventPromo, StadiumSector eventSector, float eventBackpackWeightLimit, float eventPrice) {
+    public Ticket(String eventId, String eventConcertHall, int eventCodeValue, int eventDuration, boolean isEventPromo, StadiumSector eventSector, float eventBackpackWeightLimit, float eventPrice) {
         creationTime = getFormattedCreationTime();
 
         /* validators */
