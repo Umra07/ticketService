@@ -3,64 +3,54 @@ package model;
 import enums.StadiumSector;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.NumberFormat;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.Locale;
 
 public class Ticket {
-    private final static Locale plLocale = Locale.of("pl", "PL");
-    private final String creationTime;
+    private final Instant creationTime = Instant.now();
 
     private String id;
     private String concertHall;
     private int eventCode;
-    private int duration;
+    private Instant time;
     private boolean isPromo;
     private StadiumSector stadiumSector;
-    private BigDecimal backpackWeightLimit;
-    private String price;
+    private int backpackWeightLimit;
+    private BigDecimal price = BigDecimal.ZERO;
 
     // default constructor
     public Ticket() {
-        creationTime = getFormattedCreationTime();
     }
 
     // limited constructor
-    public Ticket(String eventId, String eventConcertHall, int eventCodeValue) {
-        creationTime = getFormattedCreationTime();
+    public Ticket(String id, String concertHall, int eventCode) {
 
         /* validators */
-        validateEventId(eventId);
-        validateEventConcertHall(eventConcertHall);
-        validateEventCode(eventCodeValue);
+        validateEventId(id);
+        validateEventConcertHall(concertHall);
+        validateEventCode(eventCode);
 
-        id = eventId;
-        concertHall = eventConcertHall;
-        eventCode = eventCodeValue;
+        this.id = id;
+        this.concertHall = concertHall;
+        this.eventCode = eventCode;
     }
 
     // full constructor
-    public Ticket(String eventId, String eventConcertHall, int eventCodeValue, int eventDuration, boolean isEventPromo, StadiumSector eventSector, float eventBackpackWeightLimit, float eventPrice) {
-        creationTime = getFormattedCreationTime();
+    public Ticket(String id, String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
 
         /* validators */
-        validateEventId(eventId);
-        validateEventConcertHall(eventConcertHall);
-        validateEventCode(eventCodeValue);
-        validateEventBackpackWeightLimit(eventBackpackWeightLimit);
+        validateEventId(id);
+        validateEventConcertHall(concertHall);
+        validateEventCode(eventCode);
+        validateEventBackpackWeightLimit(backpackWeightLimit);
 
-        id = eventId;
-        concertHall = eventConcertHall;
-        eventCode = eventCodeValue;
-        duration = eventDuration;
-        isPromo = isEventPromo;
-        stadiumSector = eventSector;
-        backpackWeightLimit = new BigDecimal(eventBackpackWeightLimit).setScale(3, RoundingMode.HALF_UP);
-        price = NumberFormat.getCurrencyInstance(plLocale).format(eventPrice);
+        this.id = id;
+        this.concertHall = concertHall;
+        this.eventCode = eventCode;
+        this.time = time;
+        this.isPromo = isPromo;
+        this.stadiumSector = sector;
+        this.backpackWeightLimit = backpackWeightLimit;
+        this.price = price;
     }
 
     private void validateEventId(String id) {
@@ -81,40 +71,10 @@ public class Ticket {
         }
     }
 
-    private void validateEventBackpackWeightLimit(float backpackWeight) {
+    private void validateEventBackpackWeightLimit(int backpackWeight) {
         if(backpackWeight < 0) {
             throw new IllegalArgumentException("Incorrect weight!");
         }
     }
 
-    private String getFormattedCreationTime() {
-        ZoneId zone = ZoneId.of("Europe/Warsaw");
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM).withLocale(plLocale).withZone(zone);
-
-        return formatter.format(Instant.now());
-    }
-
-    public String toString() {
-        return String.format("""
-                        Ticket Details:
-                        --------------------
-                        ID: %s
-                        Concert Hall: %s
-                        Event Code: %d
-                        Duration: %d seconds
-                        Is Promo: %b
-                        Stadium Sector: %s
-                        Max Backpack Weight: %.3f kg
-                        Price: %s
-                        Creation Time: %s""",
-                id,
-                concertHall,
-                eventCode,
-                duration,
-                isPromo,
-                stadiumSector,
-                backpackWeightLimit,
-                price,
-                creationTime);
-    }
 }

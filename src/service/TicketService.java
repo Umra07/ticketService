@@ -3,29 +3,20 @@ package service;
 import enums.StadiumSector;
 import model.Ticket;
 
-import java.util.Random;
+import java.math.BigDecimal;
+import java.time.Instant;
 
 public class TicketService {
-    private static final int MIN_VALUE = 3600;
-    private static final int MAX_VALUE = 10800;
-
     public static void main(String[] args) {
 
-        int randomDuration = generateRandomValueFromRange();
 
         Ticket emptyTicket = new Ticket();
         Ticket limitedTicket = new Ticket("lim1", "TAURON", 378);
-        Ticket fullTicket = new Ticket("ful1", "NARODOWY", 948, randomDuration,true, StadiumSector.B, 12.874567f, 194.567f);
+        Ticket fullTicket = new Ticket("ful1", "NARODOWY", 948, Instant.parse("2025-06-23T00:00:00Z"), true, StadiumSector.B, 21, new BigDecimal("123.99"));
 
         System.out.println(emptyTicket);
         System.out.println(limitedTicket);
         System.out.println(fullTicket);
-    }
-
-    private static int generateRandomValueFromRange() {
-        Random random = new Random();
-
-        return random.nextInt(TicketService.MAX_VALUE - TicketService.MIN_VALUE + 1) + TicketService.MIN_VALUE;
     }
 }
 
