@@ -5,10 +5,9 @@ import enums.StadiumSector;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class Ticket {
+public class Ticket extends BaseModel {
     private final Instant creationTime = Instant.now();
 
-    private String id;
     private String concertHall;
     private int eventCode;
     private Instant time;
@@ -22,28 +21,24 @@ public class Ticket {
     }
 
     // limited constructor
-    public Ticket(String id, String concertHall, int eventCode) {
+    public Ticket(String concertHall, int eventCode) {
 
         /* validators */
-        validateEventId(id);
         validateEventConcertHall(concertHall);
         validateEventCode(eventCode);
 
-        this.id = id;
         this.concertHall = concertHall;
         this.eventCode = eventCode;
     }
 
     // full constructor
-    public Ticket(String id, String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
+    public Ticket(String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
 
         /* validators */
-        validateEventId(id);
         validateEventConcertHall(concertHall);
         validateEventCode(eventCode);
         validateEventBackpackWeightLimit(backpackWeightLimit);
 
-        this.id = id;
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.time = time;
@@ -53,11 +48,6 @@ public class Ticket {
         this.price = price;
     }
 
-    private void validateEventId(String id) {
-        if(id.length() > 4) {
-            throw new IllegalArgumentException("Invalid id!");
-        }
-    }
 
     private void validateEventConcertHall(String concertHall) {
         if(concertHall.length() > 10) {
