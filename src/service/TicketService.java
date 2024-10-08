@@ -1,6 +1,8 @@
 package service;
 
 import enums.StadiumSector;
+import model.Admin;
+import model.Client;
 import model.Ticket;
 
 import java.math.BigDecimal;
@@ -17,6 +19,19 @@ public class TicketService {
         System.out.println(emptyTicket);
         System.out.println(limitedTicket);
         System.out.println(fullTicket);
+
+        Client client1 = new Client();
+        Admin adm = new Admin();
+
+        client1.printRole();
+        adm.printRole();
+
+        System.out.println(client1.getTicket());
+        System.out.println(adm.checkTicket(client1.getTicket()));
+
+        client1.setTicket(fullTicket);
+        System.out.println(client1.getTicket());
+        System.out.println(adm.checkTicket(client1.getTicket()));
     }
 }
 
