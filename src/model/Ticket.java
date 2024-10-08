@@ -48,7 +48,51 @@ public class Ticket extends BaseModel {
         this.price = price;
     }
 
+    public String getConcertHall() {
+        return this.concertHall;
+    }
 
+    public int getEventCode() {
+        return this.eventCode;
+    }
+
+    public Instant getTime() {
+        return this.time;
+    }
+
+    public void setTime(Instant time) {
+        this.time = time;
+    }
+
+    public boolean getIsPromo() {
+        return this.isPromo;
+    }
+
+    public StadiumSector getStadiumSector() {
+        return this.stadiumSector;
+    }
+
+    public void setStadiumSector(StadiumSector stadiumSector) {
+        this.stadiumSector = stadiumSector;
+    }
+
+    public int getBackpackWeightLimit() {
+        return this.backpackWeightLimit;
+    }
+
+    public BigDecimal getPrice() {
+        return this.price;
+    }
+
+    public void shared(String phone) {
+        System.out.println("Shared by " + phone);
+    }
+
+    public void shared(String phone, String email) {
+        System.out.println("Shared by " + phone + " and " + email);
+    }
+
+    // methods for validating fields
     private void validateEventConcertHall(String concertHall) {
         if(concertHall.length() > 10) {
             throw new IllegalArgumentException("Incorrect concert hall!");
