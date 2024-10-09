@@ -85,33 +85,6 @@ public class Ticket extends BaseModel {
         return this.price;
     }
 
-    public void shared(String phone) {
-        System.out.println("Shared by " + phone);
-    }
-
-    public void shared(String phone, String email) {
-        System.out.println("Shared by " + phone + " and " + email);
-    }
-
-    // methods for validating fields
-    private void validateEventConcertHall(String concertHall) {
-        if(concertHall.length() > 10) {
-            throw new IllegalArgumentException("Incorrect concert hall!");
-        }
-    }
-
-    private void validateEventCode(int eventCode) {
-        if(eventCode < 100 || eventCode > 999) {
-            throw new IllegalArgumentException("Unknown event!");
-        }
-    }
-
-    private void validateEventBackpackWeightLimit(int backpackWeight) {
-        if(backpackWeight < 0) {
-            throw new IllegalArgumentException("Incorrect weight!");
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -149,4 +122,30 @@ public class Ticket extends BaseModel {
                 "\n}";
     }
 
+    public void shared(String phone) {
+        System.out.println("Shared by " + phone);
+    }
+
+    public void shared(String phone, String email) {
+        System.out.println("Shared by " + phone + " and " + email);
+    }
+
+    // methods for validating fields
+    private void validateEventConcertHall(String concertHall) {
+        if(concertHall.length() > 10) {
+            throw new IllegalArgumentException("Incorrect concert hall!");
+        }
+    }
+
+    private void validateEventCode(int eventCode) {
+        if(eventCode < 100 || eventCode > 999) {
+            throw new IllegalArgumentException("Unknown event!");
+        }
+    }
+
+    private void validateEventBackpackWeightLimit(int backpackWeight) {
+        if(backpackWeight < 0) {
+            throw new IllegalArgumentException("Incorrect weight!");
+        }
+    }
 }

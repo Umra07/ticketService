@@ -17,6 +17,7 @@ public abstract class BaseModel implements Printable {
         this.id = id;
     }
 
+    @Override
     public void print() {
         System.out.println("Print content in console.");
     }
