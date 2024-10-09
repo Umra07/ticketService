@@ -16,22 +16,27 @@ public class TicketService {
         Ticket limitedTicket = new Ticket("TAURON", 378);
         Ticket fullTicket = new Ticket("NARODOWY", 948, Instant.parse("2025-06-23T00:00:00Z"), true, StadiumSector.B, 21, new BigDecimal("123.99"));
 
-        System.out.println(emptyTicket);
-        System.out.println(limitedTicket);
-        System.out.println(fullTicket);
-
         Client client1 = new Client();
         Admin adm = new Admin();
 
         client1.printRole();
         adm.printRole();
+        System.out.println();
 
         System.out.println(client1.getTicket());
         System.out.println(adm.checkTicket(client1.getTicket()));
+        System.out.println();
 
         client1.setTicket(fullTicket);
         System.out.println(client1.getTicket());
         System.out.println(adm.checkTicket(client1.getTicket()));
+        System.out.println();
+
+        Ticket fullTicket1 = new Ticket("NARODOWY", 948, Instant.parse("2025-06-23T00:00:00Z"), true, StadiumSector.B, 21, new BigDecimal("123.99"));
+        System.out.println(fullTicket.equals(fullTicket1));
+        System.out.println(fullTicket.hashCode() == fullTicket1.hashCode());
+        System.out.println();
+        System.out.println(fullTicket);
     }
 }
 

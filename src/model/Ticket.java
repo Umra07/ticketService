@@ -4,6 +4,7 @@ import enums.StadiumSector;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Objects;
 
 public class Ticket extends BaseModel {
     private final Instant creationTime = Instant.now();
@@ -109,6 +110,43 @@ public class Ticket extends BaseModel {
         if(backpackWeight < 0) {
             throw new IllegalArgumentException("Incorrect weight!");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if(o == null || getClass() != o.getClass())
+            return false;
+
+        Ticket ticket = (Ticket) o;
+        return concertHall.equals(ticket.getConcertHall()) &&
+                eventCode == ticket.getEventCode() &&
+                time.equals(ticket.getTime()) &&
+                isPromo == ticket.getIsPromo() &&
+                stadiumSector == ticket.getStadiumSector() &&
+                backpackWeightLimit == ticket.getBackpackWeightLimit() &&
+                price.equals(ticket.getPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(concertHall, eventCode, time, isPromo, stadiumSector, backpackWeightLimit, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{\n" +
+                "creationTime: " + this.creationTime + "," +
+                "\nconcertHall: " + this.concertHall + "," +
+                "\neventCode: " + this.eventCode + "," +
+                "\ntime: " + this.time + "," +
+                "\nisPromo: " + this.isPromo + "," +
+                "\nstadiumSector: " + this.stadiumSector + "," +
+                "\nbackpackWeightLimit: " + this.backpackWeightLimit + "," +
+                "\nprice: " + this.price +
+                "\n}";
     }
 
 }
