@@ -4,11 +4,11 @@ import enums.StadiumSector;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Objects;
 
-public class Ticket {
+public class Ticket extends BaseModel {
     private final Instant creationTime = Instant.now();
 
-    private String id;
     private String concertHall;
     private int eventCode;
     private Instant time;
@@ -22,28 +22,24 @@ public class Ticket {
     }
 
     // limited constructor
-    public Ticket(String id, String concertHall, int eventCode) {
+    public Ticket(String concertHall, int eventCode) {
 
         /* validators */
-        validateEventId(id);
         validateEventConcertHall(concertHall);
         validateEventCode(eventCode);
 
-        this.id = id;
         this.concertHall = concertHall;
         this.eventCode = eventCode;
     }
 
     // full constructor
-    public Ticket(String id, String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
+    public Ticket(String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
 
         /* validators */
-        validateEventId(id);
         validateEventConcertHall(concertHall);
         validateEventCode(eventCode);
         validateEventBackpackWeightLimit(backpackWeightLimit);
 
-        this.id = id;
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.time = time;
@@ -53,12 +49,88 @@ public class Ticket {
         this.price = price;
     }
 
-    private void validateEventId(String id) {
-        if(id.length() > 4) {
-            throw new IllegalArgumentException("Invalid id!");
-        }
+    public String getConcertHall() {
+        return this.concertHall;
     }
 
+    public int getEventCode() {
+        return this.eventCode;
+    }
+
+    public Instant getTime() {
+        return this.time;
+    }
+
+    public void setTime(Instant time) {
+        this.time = time;
+    }
+
+    public boolean getIsPromo() {
+        return this.isPromo;
+    }
+
+    public StadiumSector getStadiumSector() {
+        return this.stadiumSector;
+    }
+
+    public void setStadiumSector(StadiumSector stadiumSector) {
+        this.stadiumSector = stadiumSector;
+    }
+
+    public int getBackpackWeightLimit() {
+        return this.backpackWeightLimit;
+    }
+
+    public BigDecimal getPrice() {
+        return this.price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if(o == null || getClass() != o.getClass())
+            return false;
+
+        Ticket ticket = (Ticket) o;
+        return concertHall.equals(ticket.getConcertHall()) &&
+                eventCode == ticket.getEventCode() &&
+                time.equals(ticket.getTime()) &&
+                isPromo == ticket.getIsPromo() &&
+                stadiumSector == ticket.getStadiumSector() &&
+                backpackWeightLimit == ticket.getBackpackWeightLimit() &&
+                price.equals(ticket.getPrice());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(concertHall, eventCode, time, isPromo, stadiumSector, backpackWeightLimit, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{\n" +
+                "creationTime: " + this.creationTime + "," +
+                "\nconcertHall: " + this.concertHall + "," +
+                "\neventCode: " + this.eventCode + "," +
+                "\ntime: " + this.time + "," +
+                "\nisPromo: " + this.isPromo + "," +
+                "\nstadiumSector: " + this.stadiumSector + "," +
+                "\nbackpackWeightLimit: " + this.backpackWeightLimit + "," +
+                "\nprice: " + this.price +
+                "\n}";
+    }
+
+    public void shared(String phone) {
+        System.out.println("Shared by " + phone);
+    }
+
+    public void shared(String phone, String email) {
+        System.out.println("Shared by " + phone + " and " + email);
+    }
+
+    // methods for validating fields
     private void validateEventConcertHall(String concertHall) {
         if(concertHall.length() > 10) {
             throw new IllegalArgumentException("Incorrect concert hall!");
@@ -76,5 +148,4 @@ public class Ticket {
             throw new IllegalArgumentException("Incorrect weight!");
         }
     }
-
 }
