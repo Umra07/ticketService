@@ -1,6 +1,6 @@
-package model;
+package main.java.com.jfb.tickets.model;
 
-import enums.StadiumSector;
+import main.java.com.jfb.tickets.enums.StadiumSector;
 
 import java.math.BigDecimal;
 import java.time.Instant;

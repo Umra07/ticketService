@@ -1,9 +1,9 @@
-package service;
+package main.java.com.jfb.tickets.service;
 
-import enums.StadiumSector;
-import model.Admin;
-import model.Client;
-import model.Ticket;
+import main.java.com.jfb.tickets.enums.StadiumSector;
+import main.java.com.jfb.tickets.model.Admin;
+import main.java.com.jfb.tickets.model.Client;
+import main.java.com.jfb.tickets.model.Ticket;
 
 import java.math.BigDecimal;
 import java.time.Instant;

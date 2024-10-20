@@ -1,4 +1,4 @@
-package enums;
+package main.java.com.jfb.tickets.enums;
 
 public enum StadiumSector {
     A,
