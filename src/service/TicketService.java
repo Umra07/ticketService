@@ -54,18 +54,22 @@ public class TicketService {
 
         System.out.println(arr.getSize());
 
-        CustomHashSet<Integer> customHashSet = new CustomHashSet<>();
+        CustomHashSet<Ticket> customHashSet = new CustomHashSet<>();
 
-        customHashSet.add(1);
-        customHashSet.add(2);
-        System.out.println(customHashSet.add(3));
-        System.out.println(customHashSet.add(3));
+        customHashSet.put(fullTicket);
+        customHashSet.put(emptyTicket);
+        customHashSet.put(limitedTicket);
+        customHashSet.iterate();
+        customHashSet.put(fullTicket);
+        customHashSet.iterate();
+
 
         System.out.println(customHashSet.size());
-        System.out.println(customHashSet.contains(2));
-        System.out.println(customHashSet.remove(2));
-        System.out.println(customHashSet.contains(2));
+        System.out.println(customHashSet.contains(fullTicket));
+        customHashSet.remove(limitedTicket);
+        System.out.println(customHashSet.contains(limitedTicket));
         customHashSet.iterate();
+
     }
 }
 
