@@ -1,11 +1,7 @@
-package service;
+package com.jfb.tickets.service;
 
-import enums.StadiumSector;
-import model.Admin;
-import model.Client;
-import model.Ticket;
-import structures.CustomArrayList;
-import structures.CustomHashSet;
+import com.jfb.tickets.enums.*;
+import com.jfb.tickets.model.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
