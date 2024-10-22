@@ -19,7 +19,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>main.java.com.jfb.tickets.service.TicketService</mainClass>
+                    <mainClass>com.jfb.tickets.service.TicketService</mainClass>
                 </configuration>
             </plugin>
         </plugins>

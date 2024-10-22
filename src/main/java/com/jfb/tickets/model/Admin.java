@@ -1,6 +1,6 @@
-package main.java.com.jfb.tickets.model;
+package com.jfb.tickets.model;
 
-import main.java.com.jfb.tickets.enums.Role;
+import com.jfb.tickets.enums.Role;
 
 public class Admin extends UserRole {
     public Admin() {
