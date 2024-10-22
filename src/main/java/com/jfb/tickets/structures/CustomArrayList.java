@@ -1,4 +1,4 @@
-package structures;
+package com.jfb.tickets.structures;
 
 import java.util.Arrays;
 

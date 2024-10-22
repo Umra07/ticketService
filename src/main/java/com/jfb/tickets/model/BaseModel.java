@@ -1,4 +1,4 @@
-package model;
+package com.jfb.tickets.model;
 
 import java.util.UUID;
 

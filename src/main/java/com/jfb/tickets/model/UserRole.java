@@ -1,6 +1,6 @@
-package model;
+package com.jfb.tickets.model;
 
-import enums.Role;
+import com.jfb.tickets.enums.Role;
 
 public abstract class UserRole extends BaseModel {
     Role role;

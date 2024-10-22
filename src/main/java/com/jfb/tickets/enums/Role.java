@@ -1,4 +1,4 @@
-package enums;
+package com.jfb.tickets.enums;
 
 public enum Role {
     Admin,
