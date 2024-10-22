@@ -4,6 +4,8 @@ import enums.StadiumSector;
 import model.Admin;
 import model.Client;
 import model.Ticket;
+import structures.CustomArrayList;
+import structures.CustomHashSet;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -37,6 +39,37 @@ public class TicketService {
         System.out.println(fullTicket.hashCode() == fullTicket1.hashCode());
         System.out.println();
         System.out.println(fullTicket);
+
+        CustomArrayList<String> arr = new CustomArrayList<>(3);
+
+        arr.add("andersen");
+        arr.add("homeworks");
+        arr.add("are");
+        arr.add("cool!");
+
+        System.out.println(arr.getSize());
+
+        System.out.println(arr.getByIndex(1));
+        System.out.println(arr.deleteByIndex(1));
+
+        System.out.println(arr.getSize());
+
+        CustomHashSet<Ticket> customHashSet = new CustomHashSet<>();
+
+        customHashSet.put(fullTicket);
+        customHashSet.put(emptyTicket);
+        customHashSet.put(limitedTicket);
+        customHashSet.iterate();
+        customHashSet.put(fullTicket);
+        customHashSet.iterate();
+
+
+        System.out.println(customHashSet.size());
+        System.out.println(customHashSet.contains(fullTicket));
+        customHashSet.remove(limitedTicket);
+        System.out.println(customHashSet.contains(limitedTicket));
+        customHashSet.iterate();
+
     }
 }
 
