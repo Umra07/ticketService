@@ -4,8 +4,8 @@ import com.jfb.tickets.enums.*;
 import com.jfb.tickets.model.*;
 import com.jfb.tickets.structures.*;
 
-import java.math.*;
-import java.time.*;
+import java.math.BigDecimal;
+import java.time.Instant;
 
 public class TicketService {
     public static void main(String[] args) {
