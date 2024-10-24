@@ -5,10 +5,9 @@ import com.jfb.tickets.enums.StadiumSector;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Ticket extends BaseModel {
-    private final Instant creationTime = Instant.now();
-
     private String concertHall;
     private int eventCode;
     private Instant time;
@@ -18,11 +17,13 @@ public class Ticket extends BaseModel {
     private BigDecimal price = BigDecimal.ZERO;
 
     // default constructor
-    public Ticket() {
+    public Ticket(UUID id, Instant creationTime) {
+        super(id, creationTime);
     }
 
     // limited constructor
-    public Ticket(String concertHall, int eventCode) {
+    public Ticket(UUID id, Instant creationTime, String concertHall, int eventCode) {
+        super(id, creationTime);
 
         /* validators */
         validateEventConcertHall(concertHall);
@@ -33,7 +34,8 @@ public class Ticket extends BaseModel {
     }
 
     // full constructor
-    public Ticket(String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
+    public Ticket(UUID id, Instant creationTime, String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
+        super(id, creationTime);
 
         /* validators */
         validateEventConcertHall(concertHall);
@@ -111,7 +113,7 @@ public class Ticket extends BaseModel {
     @Override
     public String toString() {
         return "Ticket{\n" +
-                "creationTime: " + this.creationTime + "," +
+                "creationTime: " + this.getCreationTime() + "," +
                 "\nconcertHall: " + this.concertHall + "," +
                 "\neventCode: " + this.eventCode + "," +
                 "\ntime: " + this.time + "," +
