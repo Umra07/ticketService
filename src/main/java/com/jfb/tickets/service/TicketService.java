@@ -1,72 +1,41 @@
 package com.jfb.tickets.service;
 
+import com.jfb.tickets.DatabaseConnection;
+import com.jfb.tickets.dao.TicketDAO;
+import com.jfb.tickets.dao.UserDAO;
 import com.jfb.tickets.enums.*;
 import com.jfb.tickets.model.*;
-import com.jfb.tickets.structures.*;
+import com.jfb.tickets.structures.CustomArrayList;
 
 import java.math.BigDecimal;
+import java.sql.*;
 import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
 
 public class TicketService {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) throws SQLException {
 
-        Ticket emptyTicket = new Ticket();
-        Ticket limitedTicket = new Ticket("TAURON", 378);
-        Ticket fullTicket = new Ticket("NARODOWY", 948, Instant.parse("2025-06-23T00:00:00Z"), true, StadiumSector.B, 21, new BigDecimal("123.99"));
+//
+        Ticket emptyTicket = new Ticket(UUID.randomUUID(), Instant.now());
+//        Ticket limitedTicket = new Ticket("TAURON", 378);
+//        Ticket fullTicket = new Ticket("NARODOWY", 948, Instant.parse("2025-06-23T00:00:00Z"), true, StadiumSector.B, 21, new BigDecimal("123.99"));
+//
+        User client1 = new User(UUID.randomUUID(), Instant.now());
+//        Admin adm = new Admin();
+//
+//        System.out.println(emptyTicket.getCreationTime());
+//        System.out.println(client1.getCreationTime());
+//        System.out.println(adm.getCreationTime());
 
-        Client client1 = new Client();
-        Admin adm = new Admin();
-
-        client1.printRole();
-        adm.printRole();
-        System.out.println();
-
-        System.out.println(client1.getTicket());
-        System.out.println(adm.checkTicket(client1.getTicket()));
-        System.out.println();
-
-        client1.setTicket(fullTicket);
-        System.out.println(client1.getTicket());
-        System.out.println(adm.checkTicket(client1.getTicket()));
-        System.out.println();
-
-        Ticket fullTicket1 = new Ticket("NARODOWY", 948, Instant.parse("2025-06-23T00:00:00Z"), true, StadiumSector.B, 21, new BigDecimal("123.99"));
-        System.out.println(fullTicket.equals(fullTicket1));
-        System.out.println(fullTicket.hashCode() == fullTicket1.hashCode());
-        System.out.println();
-        System.out.println(fullTicket);
-
-        CustomArrayList<String> arr = new CustomArrayList<>(3);
-
-        arr.add("andersen");
-        arr.add("homeworks");
-        arr.add("are");
-        arr.add("cool!");
-
-        System.out.println(arr.getSize());
-
-        System.out.println(arr.getByIndex(1));
-        System.out.println(arr.deleteByIndex(1));
-
-        System.out.println(arr.getSize());
-
-        CustomHashSet<Ticket> customHashSet = new CustomHashSet<>();
-
-        customHashSet.put(fullTicket);
-        customHashSet.put(emptyTicket);
-        customHashSet.put(limitedTicket);
-        customHashSet.iterate();
-        customHashSet.put(fullTicket);
-        customHashSet.iterate();
-
-
-        System.out.println(customHashSet.size());
-        System.out.println(customHashSet.contains(fullTicket));
-        customHashSet.remove(limitedTicket);
-        System.out.println(customHashSet.contains(limitedTicket));
-        customHashSet.iterate();
-
+        UserDAO userDAO = new UserDAO();
+        List<User> users = userDAO.getAll();
+        User user = userDAO.get(users.get(0).getId());
+        userDAO.delete(users.get(0).getId());
+        System.out.println(user.toString());
     }
+
+
 }
 
