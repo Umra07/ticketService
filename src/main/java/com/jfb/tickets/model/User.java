@@ -8,8 +8,7 @@ import java.util.UUID;
 public class User extends UserRole {
     private Ticket ticket;
 
-    public User(UUID id, Instant creationTime) {
-        super(id, creationTime);
+    public User() {
         this.role = Role.Client;
     }
 

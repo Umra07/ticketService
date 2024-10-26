@@ -16,6 +16,12 @@ import java.sql.Timestamp;
 import java.sql.Connection;
 
 public class TicketDAO {
+    private static final String SELECT_TICKET_BY_ID_QUERY = "SELECT * FROM tickets WHERE id = ?";
+    private static final String SELECT_ALL_TICKETS_QUERY = "SELECT * FROM tickets";
+    private static final String SELECT_ALL_TICKETS_BY_USER_ID_QUERY = "SELECT * FROM tickets WHERE user_id = ?";
+    private static final String INSERT_TICKET_QUERY = "INSERT INTO tickets (id, user_id, ticket_type, creation_time) VALUES (?, ?, ?::ticket_type, ?)";
+    private static final String UPDATE_TICKET_TYPE_QUERY = "UPDATE tickets SET ticket_type = ?::ticket_type WHERE id = ?";
+
     private final DatabaseConnection databaseConnection;
 
     public TicketDAO() {
@@ -23,9 +29,8 @@ public class TicketDAO {
     }
 
     public Ticket get(UUID id) {
-        String sql = "SELECT * FROM tickets WHERE id = ?";
 
-        try(PreparedStatement statement = getPreparedStatement(sql)) {
+        try(PreparedStatement statement = getPreparedStatement(SELECT_TICKET_BY_ID_QUERY)) {
             statement.setObject(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -41,9 +46,8 @@ public class TicketDAO {
 
     public List<Ticket> getAll() {
         List<Ticket> tickets = new ArrayList<>();
-        String sql = "SELECT * FROM tickets";
 
-        try(PreparedStatement statement = getPreparedStatement(sql)) {
+        try(PreparedStatement statement = getPreparedStatement(SELECT_ALL_TICKETS_QUERY)) {
             ResultSet resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
@@ -59,11 +63,10 @@ public class TicketDAO {
         return tickets;
     }
 
-    public List<Ticket> getAll(UUID userId) {
+    public List<Ticket> getAllByUserId(UUID userId) {
         List<Ticket> tickets = new ArrayList<>();
-        String sql = "SELECT * FROM tickets WHERE user_id = ?";
 
-        try(PreparedStatement statement = getPreparedStatement(sql)) {
+        try(PreparedStatement statement = getPreparedStatement(SELECT_ALL_TICKETS_BY_USER_ID_QUERY)) {
             statement.setObject(1, userId);
             ResultSet resultSet = statement.executeQuery();
 
@@ -81,9 +84,8 @@ public class TicketDAO {
     }
 
     public void save(Ticket ticket, UUID userId) {
-        String sql = "INSERT INTO tickets (id, user_id, ticket_type, creation_time) VALUES (?, ?, ?::ticket_type, ?)";
 
-        try (PreparedStatement statement = getPreparedStatement(sql)) {
+        try (PreparedStatement statement = getPreparedStatement(INSERT_TICKET_QUERY)) {
             statement.setObject(1, ticket.getId());
             statement.setObject(2, userId);
             statement.setString(3, "DAY");
@@ -95,9 +97,8 @@ public class TicketDAO {
     }
 
     public void updateTicketType(UUID ticketId, String ticketType) {
-        String sql = "UPDATE tickets SET ticket_type = ?::ticket_type WHERE id = ?";
 
-        try(PreparedStatement statement = getPreparedStatement(sql)) {
+        try(PreparedStatement statement = getPreparedStatement(UPDATE_TICKET_TYPE_QUERY)) {
             statement.setString(1, ticketType);
             statement.setObject(2, ticketId);
             statement.executeUpdate();
@@ -111,7 +112,11 @@ public class TicketDAO {
         UUID uuid = UUID.fromString(resultSet.getString("id"));
         Instant creationTime = resultSet.getTimestamp("creation_time").toInstant();
 
-        return new Ticket(uuid, creationTime);
+        Ticket newTicket = new Ticket();
+        newTicket.setId(uuid);
+        newTicket.setCreationTime(creationTime);
+
+        return newTicket;
     }
 
     private PreparedStatement getPreparedStatement(String sql) throws SQLException {

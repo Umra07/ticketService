@@ -8,8 +8,7 @@ import java.util.UUID;
 public abstract class UserRole extends BaseModel {
     Role role;
 
-    public UserRole(UUID id, Instant creationTime) {
-        super(id, creationTime);
+    public UserRole() {
     }
 
     public Role getRole() {

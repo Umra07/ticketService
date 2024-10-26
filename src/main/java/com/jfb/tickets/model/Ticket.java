@@ -17,13 +17,11 @@ public class Ticket extends BaseModel {
     private BigDecimal price = BigDecimal.ZERO;
 
     // default constructor
-    public Ticket(UUID id, Instant creationTime) {
-        super(id, creationTime);
+    public Ticket() {
     }
 
     // limited constructor
-    public Ticket(UUID id, Instant creationTime, String concertHall, int eventCode) {
-        super(id, creationTime);
+    public Ticket(String concertHall, int eventCode) {
 
         /* validators */
         validateEventConcertHall(concertHall);
@@ -34,8 +32,7 @@ public class Ticket extends BaseModel {
     }
 
     // full constructor
-    public Ticket(UUID id, Instant creationTime, String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
-        super(id, creationTime);
+    public Ticket(String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
 
         /* validators */
         validateEventConcertHall(concertHall);

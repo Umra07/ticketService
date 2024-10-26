@@ -6,8 +6,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 public class Admin extends UserRole {
-    public Admin(UUID id, Instant creationTime) {
-        super(id, creationTime);
+    public Admin() {
         this.role = Role.Admin;
     }
 

@@ -4,20 +4,25 @@ import java.time.*;
 import java.util.UUID;
 
 public abstract class BaseModel implements Printable {
-    private final UUID id;
-    private final Instant creationTime;
+    private UUID id = UUID.randomUUID();
+    private Instant creationTime = Instant.now();
 
-    public BaseModel(UUID id, Instant creationTime) {
-        this.id = id;
-        this.creationTime = creationTime;
-    }
+    public BaseModel() {}
 
     public UUID getId() {
         return this.id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public Instant getCreationTime() {
         return this.creationTime;
+    }
+
+    public void setCreationTime(Instant creationTime) {
+        this.creationTime = creationTime;
     }
 
     @Override
