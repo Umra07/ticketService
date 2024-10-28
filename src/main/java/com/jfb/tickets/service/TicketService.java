@@ -1,72 +1,92 @@
 package com.jfb.tickets.service;
 
+import com.jfb.tickets.DatabaseConnection;
+import com.jfb.tickets.dao.TicketDAO;
+import com.jfb.tickets.dao.UserDAO;
 import com.jfb.tickets.enums.*;
 import com.jfb.tickets.model.*;
-import com.jfb.tickets.structures.*;
+import com.jfb.tickets.structures.CustomArrayList;
+import com.jfb.tickets.structures.CustomHashSet;
 
 import java.math.BigDecimal;
+import java.sql.*;
 import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
 
 public class TicketService {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) throws SQLException {
+        testOOPTask();
+        testCollectionsTask();
+        testDAOTask();
+    }
 
+    private static void testOOPTask() {
         Ticket emptyTicket = new Ticket();
         Ticket limitedTicket = new Ticket("TAURON", 378);
         Ticket fullTicket = new Ticket("NARODOWY", 948, Instant.parse("2025-06-23T00:00:00Z"), true, StadiumSector.B, 21, new BigDecimal("123.99"));
 
-        Client client1 = new Client();
+        System.out.println(emptyTicket);
+        System.out.println(limitedTicket);
+        System.out.println(fullTicket);
+    }
+
+    private static void testCollectionsTask() {
+        CustomArrayList <String> words = new CustomArrayList<>(10);
+
+        words.add("Andersen");
+        words.add("tasks");
+        words.add("are");
+        words.add("cool");
+
+        System.out.println(words.getSize());
+        System.out.println(words.getByIndex(1));
+        System.out.println(words.deleteByIndex(1));
+        System.out.println(words.getByIndex(1));
+        System.out.println(words.getSize());
+
+        CustomHashSet<Integer> numbers = new CustomHashSet<>();
+
+        numbers.size();
+
+        numbers.put(23);
+        numbers.put(46);
+        numbers.put(23);
+        numbers.put(23124);
+
+        System.out.println(numbers.contains(23));
+        numbers.remove(23);
+        System.out.println(numbers.contains(23));
+        System.out.println(numbers.size());
+
+        numbers.iterate();
+    }
+
+    private static void testDAOTask() {
+        Ticket emptyTicket = new Ticket();
+        Ticket anotherEmptyTicket = new Ticket();
+
+        User client1 = new User();
+        User newClient = new User();
         Admin adm = new Admin();
 
-        client1.printRole();
-        adm.printRole();
-        System.out.println();
+        //User dao tests
+        UserDAO userDAO = new UserDAO();
+        List<User> users = userDAO.getAll();
+        userDAO.save(newClient);
+        User user = userDAO.get(users.get(0).getId());
+        userDAO.delete(users.get(0).getId());
+        System.out.println(user.toString());
 
-        System.out.println(client1.getTicket());
-        System.out.println(adm.checkTicket(client1.getTicket()));
-        System.out.println();
-
-        client1.setTicket(fullTicket);
-        System.out.println(client1.getTicket());
-        System.out.println(adm.checkTicket(client1.getTicket()));
-        System.out.println();
-
-        Ticket fullTicket1 = new Ticket("NARODOWY", 948, Instant.parse("2025-06-23T00:00:00Z"), true, StadiumSector.B, 21, new BigDecimal("123.99"));
-        System.out.println(fullTicket.equals(fullTicket1));
-        System.out.println(fullTicket.hashCode() == fullTicket1.hashCode());
-        System.out.println();
-        System.out.println(fullTicket);
-
-        CustomArrayList<String> arr = new CustomArrayList<>(3);
-
-        arr.add("andersen");
-        arr.add("homeworks");
-        arr.add("are");
-        arr.add("cool!");
-
-        System.out.println(arr.getSize());
-
-        System.out.println(arr.getByIndex(1));
-        System.out.println(arr.deleteByIndex(1));
-
-        System.out.println(arr.getSize());
-
-        CustomHashSet<Ticket> customHashSet = new CustomHashSet<>();
-
-        customHashSet.put(fullTicket);
-        customHashSet.put(emptyTicket);
-        customHashSet.put(limitedTicket);
-        customHashSet.iterate();
-        customHashSet.put(fullTicket);
-        customHashSet.iterate();
-
-
-        System.out.println(customHashSet.size());
-        System.out.println(customHashSet.contains(fullTicket));
-        customHashSet.remove(limitedTicket);
-        System.out.println(customHashSet.contains(limitedTicket));
-        customHashSet.iterate();
-
+        //Ticket dao tests
+        TicketDAO ticketDAO = new TicketDAO();
+        List<Ticket> tickets = ticketDAO.getAll();
+        List<Ticket> userTickets = ticketDAO.getAllByUserId(client1.getId());
+        Ticket ticket = ticketDAO.get(emptyTicket.getId());
+        ticketDAO.save(anotherEmptyTicket, newClient.getId());
+        ticketDAO.updateTicketType(anotherEmptyTicket.getId(), "YEAR");
     }
+
 }
 

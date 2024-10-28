@@ -1,13 +1,13 @@
 package com.jfb.tickets.model;
 
+import java.time.*;
 import java.util.UUID;
 
 public abstract class BaseModel implements Printable {
-    private UUID id;
+    private UUID id = UUID.randomUUID();
+    private Instant creationTime = Instant.now();
 
-    public BaseModel() {
-        this.id = UUID.randomUUID();
-    }
+    public BaseModel() {}
 
     public UUID getId() {
         return this.id;
@@ -15,6 +15,14 @@ public abstract class BaseModel implements Printable {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public Instant getCreationTime() {
+        return this.creationTime;
+    }
+
+    public void setCreationTime(Instant creationTime) {
+        this.creationTime = creationTime;
     }
 
     @Override

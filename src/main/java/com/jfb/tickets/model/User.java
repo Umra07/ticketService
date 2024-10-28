@@ -2,10 +2,13 @@ package com.jfb.tickets.model;
 
 import com.jfb.tickets.enums.Role;
 
-public class Client extends UserRole {
+import java.time.Instant;
+import java.util.UUID;
+
+public class User extends UserRole {
     private Ticket ticket;
 
-    public Client() {
+    public User() {
         this.role = Role.Client;
     }
 

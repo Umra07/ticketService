@@ -5,10 +5,9 @@ import com.jfb.tickets.enums.StadiumSector;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Ticket extends BaseModel {
-    private final Instant creationTime = Instant.now();
-
     private String concertHall;
     private int eventCode;
     private Instant time;
@@ -111,7 +110,7 @@ public class Ticket extends BaseModel {
     @Override
     public String toString() {
         return "Ticket{\n" +
-                "creationTime: " + this.creationTime + "," +
+                "creationTime: " + this.getCreationTime() + "," +
                 "\nconcertHall: " + this.concertHall + "," +
                 "\neventCode: " + this.eventCode + "," +
                 "\ntime: " + this.time + "," +
