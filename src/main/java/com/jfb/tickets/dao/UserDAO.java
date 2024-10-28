@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class UserDAO {
     private static final String SELECT_USER_BY_ID_QUERY = "SELECT * FROM users WHERE id = ?";
-    private static final String SELECT_ALL_USERS_QUERY = "SELECT * FROM users WHERE id = ?";
+    private static final String SELECT_ALL_USERS_QUERY = "SELECT * FROM users";
     private static final String INSERT_USER_QUERY = "INSERT INTO users (id, name, creation_time) VALUES (?, ?, ?)";
     private static final String DELETE_USER_BY_ID_QUERY = "DELETE FROM users USING tickets WHERE users.id = ? AND tickets.user_id = users.id";
 
