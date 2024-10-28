@@ -1,6 +1,6 @@
 package com.jfb.tickets.dao;
 
-import com.jfb.tickets.DatabaseConnection;
+import com.jfb.tickets.config.DatabaseConnection;
 import com.jfb.tickets.model.Ticket;
 
 import java.util.UUID;
@@ -22,11 +22,12 @@ public class TicketDAO {
     private static final String INSERT_TICKET_QUERY = "INSERT INTO tickets (id, user_id, ticket_type, creation_time) VALUES (?, ?, ?::ticket_type, ?)";
     private static final String UPDATE_TICKET_TYPE_QUERY = "UPDATE tickets SET ticket_type = ?::ticket_type WHERE id = ?";
 
-    private final DatabaseConnection databaseConnection;
+    private final DatabaseConnection dataSource;
 
-    public TicketDAO() {
-        databaseConnection = new DatabaseConnection();
+    public TicketDAO(DatabaseConnection dataSource) {
+        this.dataSource = dataSource;
     }
+
 
     public Ticket get(UUID id) {
 
@@ -120,7 +121,7 @@ public class TicketDAO {
     }
 
     private PreparedStatement getPreparedStatement(String sql) throws SQLException {
-        Connection connection = databaseConnection.getConnection();
+        Connection connection = dataSource.getConnection();
         return connection.prepareStatement(sql);
     }
 }

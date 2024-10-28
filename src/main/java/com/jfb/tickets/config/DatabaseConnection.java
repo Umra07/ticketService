@@ -1,4 +1,4 @@
-package com.jfb.tickets;
+package com.jfb.tickets.config;
 
 import java.io.IOException;
 import java.io.FileInputStream;
