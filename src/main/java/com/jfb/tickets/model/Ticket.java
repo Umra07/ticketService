@@ -1,12 +1,16 @@
 package com.jfb.tickets.model;
 
 import com.jfb.tickets.enums.StadiumSector;
+import com.jfb.tickets.enums.TicketType;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tickets")
 public class Ticket extends BaseModel {
     private String concertHall;
     private int eventCode;
@@ -15,6 +19,13 @@ public class Ticket extends BaseModel {
     private StadiumSector stadiumSector;
     private int backpackWeightLimit;
     private BigDecimal price = BigDecimal.ZERO;
+
+    @Column(name = "user_id")
+    private UUID userId;
+
+    @Column(name = "ticket_type")
+    @Enumerated(EnumType.STRING)
+    private TicketType ticketType;
 
     // default constructor
     public Ticket() {
@@ -29,6 +40,13 @@ public class Ticket extends BaseModel {
 
         this.concertHall = concertHall;
         this.eventCode = eventCode;
+    }
+
+
+    // hw9 special ticket constructor
+    public Ticket(UUID userId, TicketType ticketType) {
+        this.userId = userId;
+        this.ticketType = ticketType;
     }
 
     // full constructor
@@ -82,6 +100,22 @@ public class Ticket extends BaseModel {
 
     public BigDecimal getPrice() {
         return this.price;
+    }
+
+    public UUID getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
     @Override

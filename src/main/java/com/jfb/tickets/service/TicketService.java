@@ -17,9 +17,32 @@ import java.util.UUID;
 public class TicketService {
 
     public static void main(String[] args) throws SQLException {
-        testOOPTask();
-        testCollectionsTask();
-        testDAOTask();
+//        testOOPTask();
+//        testCollectionsTask();
+//        testDAOTask();
+        testHibernateTask();
+    }
+
+    private static void testHibernateTask() {
+        UserDAO userDAO = new UserDAO();
+        TicketDAO ticketDAO = new TicketDAO();
+
+        User user = new User();
+        user.setName("Love");
+        UUID userId = user.getId();
+        userDAO.save(user);
+        List<User> users = userDAO.getAll();
+        System.out.println(users);
+        userDAO.delete(userId);
+
+        Ticket ticket = new Ticket("Main Hall", 123);
+        UUID ticketId = ticket.getId();
+        ticket.setUserId(user.getId());
+        ticket.setTicketType(TicketType.DAY);
+        ticketDAO.save(ticket);
+        ticketDAO.updateTicketType(ticketId, TicketType.YEAR.toString());
+        List<Ticket> tickets = ticketDAO.getAll();
+        System.out.println(tickets);
     }
 
     private static void testOOPTask() {
@@ -33,34 +56,34 @@ public class TicketService {
     }
 
     private static void testCollectionsTask() {
-        CustomArrayList <String> words = new CustomArrayList<>(10);
-
-        words.add("Andersen");
-        words.add("tasks");
-        words.add("are");
-        words.add("cool");
-
-        System.out.println(words.getSize());
-        System.out.println(words.getByIndex(1));
-        System.out.println(words.deleteByIndex(1));
-        System.out.println(words.getByIndex(1));
-        System.out.println(words.getSize());
-
-        CustomHashSet<Integer> numbers = new CustomHashSet<>();
-
-        numbers.size();
-
-        numbers.put(23);
-        numbers.put(46);
-        numbers.put(23);
-        numbers.put(23124);
-
-        System.out.println(numbers.contains(23));
-        numbers.remove(23);
-        System.out.println(numbers.contains(23));
-        System.out.println(numbers.size());
-
-        numbers.iterate();
+//        CustomArrayList <String> words = new CustomArrayList<>(10);
+//
+//        words.add("Andersen");
+//        words.add("tasks");
+//        words.add("are");
+//        words.add("cool");
+//
+//        System.out.println(words.getSize());
+//        System.out.println(words.getByIndex(1));
+//        System.out.println(words.deleteByIndex(1));
+//        System.out.println(words.getByIndex(1));
+//        System.out.println(words.getSize());
+//
+//        CustomHashSet<Integer> numbers = new CustomHashSet<>();
+//
+//        numbers.size();
+//
+//        numbers.put(23);
+//        numbers.put(46);
+//        numbers.put(23);
+//        numbers.put(23124);
+//
+//        System.out.println(numbers.contains(23));
+//        numbers.remove(23);
+//        System.out.println(numbers.contains(23));
+//        System.out.println(numbers.size());
+//
+//        numbers.iterate();
     }
 
     private static void testDAOTask() {
@@ -84,7 +107,7 @@ public class TicketService {
         List<Ticket> tickets = ticketDAO.getAll();
         List<Ticket> userTickets = ticketDAO.getAllByUserId(client1.getId());
         Ticket ticket = ticketDAO.get(emptyTicket.getId());
-        ticketDAO.save(anotherEmptyTicket, newClient.getId());
+//        ticketDAO.save(anotherEmptyTicket, newClient.getId());
         ticketDAO.updateTicketType(anotherEmptyTicket.getId(), "YEAR");
     }
 
