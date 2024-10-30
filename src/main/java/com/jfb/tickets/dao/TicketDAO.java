@@ -1,8 +1,8 @@
 package com.jfb.tickets.dao;
 
-import com.jfb.tickets.config.DatabaseConnection;
 import com.jfb.tickets.model.Ticket;
 
+import javax.sql.DataSource;
 import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
@@ -22,9 +22,9 @@ public class TicketDAO {
     private static final String INSERT_TICKET_QUERY = "INSERT INTO tickets (id, user_id, ticket_type, creation_time) VALUES (?, ?, ?::ticket_type, ?)";
     private static final String UPDATE_TICKET_TYPE_QUERY = "UPDATE tickets SET ticket_type = ?::ticket_type WHERE id = ?";
 
-    private final DatabaseConnection dataSource;
+    private final DataSource dataSource;
 
-    public TicketDAO(DatabaseConnection dataSource) {
+    public TicketDAO(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

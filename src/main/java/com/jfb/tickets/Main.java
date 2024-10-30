@@ -14,6 +14,7 @@ import com.jfb.tickets.service.UserService;
 import com.jfb.tickets.structures.CustomArrayList;
 import com.jfb.tickets.structures.CustomHashSet;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Main {
 
         testOOPTask();
         testCollectionsTask();
-        testDAOTask();
+//        testDAOTask();
         testSpringTask();
     }
 
@@ -99,7 +100,7 @@ public class Main {
         numbers.iterate();
     }
 
-    private static void testDAOTask() {
+    private static void testDAOTask(DataSource dataSource) {
         Ticket emptyTicket = new Ticket();
         Ticket anotherEmptyTicket = new Ticket();
 
@@ -108,7 +109,7 @@ public class Main {
         Admin adm = new Admin();
 
         //User dao tests
-        UserDAO userDAO = new UserDAO(new DatabaseConnection());
+        UserDAO userDAO = new UserDAO(dataSource);
         List<User> users = userDAO.getAll();
         userDAO.save(newClient);
         User user = userDAO.get(users.get(0).getId());
@@ -116,7 +117,7 @@ public class Main {
         System.out.println(user.toString());
 
         //Ticket dao tests
-        TicketDAO ticketDAO = new TicketDAO(new DatabaseConnection());
+        TicketDAO ticketDAO = new TicketDAO(dataSource);
         List<Ticket> tickets = ticketDAO.getAll();
         List<Ticket> userTickets = ticketDAO.getAllByUserId(client1.getId());
         Ticket ticket = ticketDAO.get(emptyTicket.getId());
