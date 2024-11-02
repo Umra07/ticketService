@@ -1,8 +1,8 @@
 package com.jfb.tickets.dao;
 
-import com.jfb.tickets.DatabaseConnection;
 import com.jfb.tickets.model.User;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -21,10 +21,10 @@ public class UserDAO {
     private static final String INSERT_USER_QUERY = "INSERT INTO users (id, name, creation_time) VALUES (?, ?, ?)";
     private static final String DELETE_USER_BY_ID_QUERY = "DELETE FROM users USING tickets WHERE users.id = ? AND tickets.user_id = users.id";
 
-    private final DatabaseConnection databaseConnection;
+    private DataSource dataSource;
 
-    public UserDAO() {
-        databaseConnection = new DatabaseConnection();
+    public UserDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     public User get(UUID id) {
@@ -94,7 +94,7 @@ public class UserDAO {
     }
 
     private PreparedStatement getPreparedStatement(String sql) throws SQLException {
-        Connection connection = databaseConnection.getConnection();
+        Connection connection = dataSource.getConnection();
         return connection.prepareStatement(sql);
     }
 }
