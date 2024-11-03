@@ -17,7 +17,7 @@ public class DatabaseConnection {
     private void loadProperties() {
         Properties properties = new Properties();
 
-        try(FileInputStream fis = new FileInputStream("src/main/java/resources/db.properties")) {
+        try(FileInputStream fis = new FileInputStream("src/main/java/resources/application.properties")) {
             properties.load(fis);
             url = properties.getProperty("db.url");
             user = properties.getProperty("db.user");

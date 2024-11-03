@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Ticket extends BaseModel {
+    private UUID userId;
     private String concertHall;
     private int eventCode;
     private Instant time;
@@ -21,24 +22,26 @@ public class Ticket extends BaseModel {
     }
 
     // limited constructor
-    public Ticket(String concertHall, int eventCode) {
+    public Ticket(UUID userId, String concertHall, int eventCode) {
 
         /* validators */
         validateEventConcertHall(concertHall);
         validateEventCode(eventCode);
 
+        this.userId = userId;
         this.concertHall = concertHall;
         this.eventCode = eventCode;
     }
 
     // full constructor
-    public Ticket(String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
+    public Ticket(UUID userId, String concertHall, int eventCode, Instant time, boolean isPromo, StadiumSector sector, int backpackWeightLimit, BigDecimal price) {
 
         /* validators */
         validateEventConcertHall(concertHall);
         validateEventCode(eventCode);
         validateEventBackpackWeightLimit(backpackWeightLimit);
 
+        this.userId = userId;
         this.concertHall = concertHall;
         this.eventCode = eventCode;
         this.time = time;
@@ -46,6 +49,14 @@ public class Ticket extends BaseModel {
         this.stadiumSector = sector;
         this.backpackWeightLimit = backpackWeightLimit;
         this.price = price;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getConcertHall() {

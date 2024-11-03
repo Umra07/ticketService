@@ -20,8 +20,9 @@ public class UserDAO {
     private static final String SELECT_ALL_USERS_QUERY = "SELECT * FROM users";
     private static final String INSERT_USER_QUERY = "INSERT INTO users (id, name, creation_time) VALUES (?, ?, ?)";
     private static final String DELETE_USER_BY_ID_QUERY = "DELETE FROM users USING tickets WHERE users.id = ? AND tickets.user_id = users.id";
+    private static final String UPDATE_USER_STATUS_QUERY = "UPDATE users SET status = ? WHERE users.id = ?";
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public UserDAO(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -78,6 +79,16 @@ public class UserDAO {
             statement.setObject(1, userId);
             statement.executeUpdate();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateUserStatus(UUID userId, boolean status) {
+        try(PreparedStatement statement = getPreparedStatement(UPDATE_USER_STATUS_QUERY)) {
+            statement.setBoolean(1, status);
+            statement.setObject(2, userId);
+            statement.executeUpdate();
+        } catch(SQLException e) {
             throw new RuntimeException(e);
         }
     }
