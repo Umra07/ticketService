@@ -14,8 +14,8 @@ import com.jfb.tickets.structures.CustomHashSet;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.sql.DataSource;
-import java.util.List;
-import java.util.UUID;
+import java.sql.SQLOutput;
+import java.util.*;
 
 public class Main {
 
@@ -42,6 +42,11 @@ public class Main {
         userService.updateUserStatusAndCreateTicket(user.getId(), false, ticket);
         System.out.println("Transaction open? : " + TransactionSynchronizationManager.isActualTransactionActive());
 
+        TicketService ticketService = ctx.getBean(TicketService.class);
+
+        List<BusTicket> tickets = ticketService.getTicketFromLocalFile();
+
+        System.out.println(tickets);
     }
 
     private static void testSpringTask() {
