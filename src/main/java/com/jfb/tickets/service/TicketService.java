@@ -14,7 +14,6 @@ import java.io.*;
 import java.util.*;
 
 @Service
-@Transactional
 public class TicketService {
 
     @Value("classpath:ticketData.txt")
@@ -38,9 +37,12 @@ public class TicketService {
         return ticketDAO.getAllByUserId(userId);
     }
 
+    @Transactional
     public void saveTicket(Ticket ticket, UUID userId) {
         ticketDAO.save(ticket, userId);
     }
+
+    @Transactional
 
     public void updateTicketType(UUID ticketId, String ticketType) {
         ticketDAO.updateTicketType(ticketId, ticketType);

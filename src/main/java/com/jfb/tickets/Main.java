@@ -11,6 +11,7 @@ import com.jfb.tickets.service.TicketService;
 import com.jfb.tickets.service.UserService;
 import com.jfb.tickets.structures.CustomArrayList;
 import com.jfb.tickets.structures.CustomHashSet;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.sql.DataSource;
@@ -119,7 +120,7 @@ public class Main {
         numbers.iterate();
     }
 
-    private static void testDAOTask(DataSource dataSource) {
+    private static void testDAOTask(JdbcTemplate jdbcTemplate) {
         Ticket emptyTicket = new Ticket();
         Ticket anotherEmptyTicket = new Ticket();
 
@@ -128,7 +129,7 @@ public class Main {
         Admin adm = new Admin();
 
         //User dao tests
-        UserDAO userDAO = new UserDAO(dataSource);
+        UserDAO userDAO = new UserDAO(jdbcTemplate);
         List<User> users = userDAO.getAll();
         userDAO.save(newClient);
         User user = userDAO.get(users.get(0).getId());
@@ -136,7 +137,7 @@ public class Main {
         System.out.println(user.toString());
 
         //Ticket dao tests
-        TicketDAO ticketDAO = new TicketDAO(dataSource);
+        TicketDAO ticketDAO = new TicketDAO(jdbcTemplate);
         List<Ticket> tickets = ticketDAO.getAll();
         List<Ticket> userTickets = ticketDAO.getAllByUserId(client1.getId());
         Ticket ticket = ticketDAO.get(emptyTicket.getId());

@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class UserService {
     @Value("${isUpdatingUserAndCreatingTicketAllowed}")
     private boolean allowUserUpdateAndTicketCreate;
@@ -34,15 +33,18 @@ public class UserService {
         return userDAO.getAll();
     }
 
+    @Transactional
     public void saveUser(User user) {
         System.out.println("Transaction open? : " + TransactionSynchronizationManager.isActualTransactionActive());
         userDAO.save(user);
     }
 
+    @Transactional
     public void deleteUser(UUID userId) {
         userDAO.delete(userId);
     }
 
+    @Transactional
     public void updateUserStatusAndCreateTicket(UUID userId, boolean status, Ticket ticket) {
         if(!allowUserUpdateAndTicketCreate) {
             throw new RuntimeException("User status update and ticket creation are not allowed.");
