@@ -1,14 +1,23 @@
 package com.jfb.tickets.model;
 
 import com.jfb.tickets.enums.StadiumSector;
+import com.jfb.tickets.enums.TicketType;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Ticket extends BaseModel {
+
+    @Column(name = "user_id")
     private UUID userId;
+
+    @Column(name = "ticket_type")
+    private TicketType ticketType;
+
     private String concertHall;
     private int eventCode;
     private Instant time;
@@ -22,15 +31,22 @@ public class Ticket extends BaseModel {
     }
 
     // limited constructor
-    public Ticket(UUID userId, String concertHall, int eventCode) {
+    public Ticket(String concertHall, int eventCode) {
 
         /* validators */
         validateEventConcertHall(concertHall);
         validateEventCode(eventCode);
 
-        this.userId = userId;
         this.concertHall = concertHall;
         this.eventCode = eventCode;
+    }
+
+    public Ticket(UUID id, Instant creationTime, UUID userId, TicketType ticketType) {
+
+        setId(id);
+        setCreationTime(creationTime);
+        this.userId = userId;
+        this.ticketType = ticketType;
     }
 
     // full constructor
@@ -93,6 +109,14 @@ public class Ticket extends BaseModel {
 
     public BigDecimal getPrice() {
         return this.price;
+    }
+
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 
     @Override
@@ -158,4 +182,5 @@ public class Ticket extends BaseModel {
             throw new IllegalArgumentException("Incorrect weight!");
         }
     }
+
 }

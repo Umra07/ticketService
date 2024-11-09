@@ -1,16 +1,38 @@
 package com.jfb.tickets.model;
 
-import com.jfb.tickets.enums.Role;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.*;
 
-public class User extends UserRole {
+@Entity
+public class User extends BaseModel {
+
+    @Column(name = "status")
     private boolean status = false;
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets = new ArrayList<>();
 
     public User() {
-        this.role = Role.Client;
+    }
+
+    public User(UUID id, Instant creationTime, boolean status, String name, List<Ticket> tickets) {
+        setId(id);
+        setCreationTime(creationTime);
+        this.status = status;
+        this.name = name;
+        this.tickets = tickets;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Ticket> getTickets() {
