@@ -4,6 +4,7 @@ CREATE TYPE ticket_type AS ENUM ('DAY', 'WEEK', 'MONTH', 'YEAR');
 
 CREATE TABLE users (
     id UUID PRIMARY KEY NOT NULL,
+    status BOOLEAN,
     name TEXT,
     creation_time TIMESTAMPTZ
 );
