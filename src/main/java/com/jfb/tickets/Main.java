@@ -1,23 +1,7 @@
 package com.jfb.tickets;
 
-import com.jfb.tickets.model.Ticket;
-import com.jfb.tickets.model.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import com.jfb.tickets.config.TicketsContextConfiguration;
-//import com.jfb.tickets.dao.TicketDAO;
-//import com.jfb.tickets.dao.UserDAO;
-import com.jfb.tickets.model.*;
-import com.jfb.tickets.service.TicketService;
-import com.jfb.tickets.service.UserService;
-import com.jfb.tickets.structures.CustomArrayList;
-import com.jfb.tickets.structures.CustomHashSet;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import java.util.*;
 
 @SpringBootApplication
 public class Main {

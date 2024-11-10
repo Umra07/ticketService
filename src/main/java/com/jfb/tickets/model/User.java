@@ -1,11 +1,22 @@
 package com.jfb.tickets.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 
-import java.time.Instant;
-import java.util.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import java.util.List;
+import java.util.ArrayList;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
+@Table(name = "users")
 public class User extends BaseModel {
 
     @Column(name = "status")
@@ -16,38 +27,4 @@ public class User extends BaseModel {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets = new ArrayList<>();
 
-    public User() {
-    }
-
-    public User(UUID id, Instant creationTime, boolean status, String name, List<Ticket> tickets) {
-        setId(id);
-        setCreationTime(creationTime);
-        this.status = status;
-        this.name = name;
-        this.tickets = tickets;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Ticket> getTickets() {
-        return this.tickets;
-    }
-
-    public void setTicket(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 }

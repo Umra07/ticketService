@@ -3,11 +3,21 @@ package com.jfb.tickets.controller;
 import com.jfb.tickets.enums.TicketType;
 import com.jfb.tickets.model.Ticket;
 import com.jfb.tickets.service.TicketService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.UUID;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -20,26 +30,26 @@ public class TicketController {
 
     @GetMapping("/{ticketId}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable UUID ticketId) {
-        Optional<Ticket> optionalTicket = ticketService.getTicketById(ticketId);
-        return optionalTicket.map(ticket -> new ResponseEntity<>(ticket, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Ticket ticket = ticketService.getTicketById(ticketId);
+        return new ResponseEntity<>(ticket, HttpStatus.OK);
     }
 
-    @GetMapping("/userId")
+    @GetMapping("/{userId}")
     public List<Ticket> getTicketsByUserId(@PathVariable UUID userId) {
         return ticketService.getTicketsByUserId(userId);
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<Ticket> getAllTickets() {
         return ticketService.getAllTickets();
     }
 
-    @PostMapping("")
+    @PostMapping
     public Ticket createTicket(@RequestBody Ticket ticket) {
         return ticketService.saveTicket(ticket);
     }
 
-    @PutMapping("/${ticketId}/ticketType")
+    @PutMapping("/{ticketId}")
     public void updateTicketType(@PathVariable UUID ticketId, @RequestParam TicketType ticketType) {
         ticketService.updateTicketType(ticketId, ticketType);
     }

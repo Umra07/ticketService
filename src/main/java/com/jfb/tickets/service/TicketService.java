@@ -2,32 +2,46 @@ package com.jfb.tickets.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.jfb.tickets.enums.TicketType;
+
+import com.jfb.tickets.exceptions.ResourceNotFoundException;
+
 import com.jfb.tickets.model.Ticket;
 import com.jfb.tickets.model.BusTicket;
+
 import com.jfb.tickets.repository.TicketRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import java.util.UUID;
+import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 @Service
+@RequiredArgsConstructor
 public class TicketService {
 
     @Value("classpath:ticketData.txt")
-    Resource resource;
+    private Resource resource;
 
     private final TicketRepository ticketRepository;
 
-    public TicketService(TicketRepository ticketRepository) {
-        this.ticketRepository = ticketRepository;
-    }
+    public Ticket getTicketById(UUID ticketId) {
+        Optional<Ticket> ticketOptional = ticketRepository.findById(ticketId);
 
-    public Optional<Ticket> getTicketById(UUID ticketId) {
-        return ticketRepository.findById(ticketId);
+        return ticketOptional.orElseThrow(() -> new ResourceNotFoundException("Ticket with id:" + ticketId + " was not found", HttpStatus.NOT_FOUND));
     }
 
     public List<Ticket> getAllTickets() {
