@@ -1,31 +1,30 @@
 package com.jfb.tickets.model;
 
-import com.jfb.tickets.enums.Role;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 
-import java.time.Instant;
-import java.util.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-public class User extends UserRole {
+import java.util.List;
+import java.util.ArrayList;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Entity
+@Table(name = "users")
+public class User extends BaseModel {
+
+    @Column(name = "status")
     private boolean status = false;
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets = new ArrayList<>();
 
-    public User() {
-        this.role = Role.Client;
-    }
-
-    public List<Ticket> getTickets() {
-        return this.tickets;
-    }
-
-    public void setTicket(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
 }

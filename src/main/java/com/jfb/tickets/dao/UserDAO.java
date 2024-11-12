@@ -43,7 +43,7 @@ public class UserDAO {
 
     public void save(User user) {
         UUID userId = user.getId();
-        String role = user.getRole().toString();
+        String role = "User";
         Timestamp creationTime = Timestamp.from(user.getCreationTime());
 
         jdbcTemplate.update(INSERT_USER_QUERY, userId, role, creationTime);

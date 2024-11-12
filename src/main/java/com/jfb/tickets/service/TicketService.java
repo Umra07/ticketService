@@ -2,50 +2,64 @@ package com.jfb.tickets.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jfb.tickets.dao.TicketDAO;
-import com.jfb.tickets.model.BusTicket;
+
+import com.jfb.tickets.enums.TicketType;
+
+import com.jfb.tickets.exceptions.ResourceNotFoundException;
+
 import com.jfb.tickets.model.Ticket;
+import com.jfb.tickets.model.BusTicket;
+
+import com.jfb.tickets.repository.TicketRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import java.util.UUID;
+import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 @Service
+@RequiredArgsConstructor
 public class TicketService {
 
     @Value("classpath:ticketData.txt")
-    Resource resource;
+    private Resource resource;
 
-    private final TicketDAO ticketDAO;
+    private final TicketRepository ticketRepository;
 
-    public TicketService(TicketDAO ticketDAO) {
-        this.ticketDAO = ticketDAO;
-    }
+    public Ticket getTicketById(UUID ticketId) {
+        Optional<Ticket> ticketOptional = ticketRepository.findById(ticketId);
 
-    public Ticket getTicket(UUID ticketId) {
-        return ticketDAO.get(ticketId);
+        return ticketOptional.orElseThrow(() -> new ResourceNotFoundException("Ticket with id:" + ticketId + " was not found", HttpStatus.NOT_FOUND));
     }
 
     public List<Ticket> getAllTickets() {
-        return ticketDAO.getAll();
+        return ticketRepository.findAll();
     }
 
     public List<Ticket> getTicketsByUserId(UUID userId) {
-        return ticketDAO.getAllByUserId(userId);
+        return ticketRepository.findByUserId(userId);
     }
 
     @Transactional
-    public void saveTicket(Ticket ticket, UUID userId) {
-        ticketDAO.save(ticket, userId);
+    public Ticket saveTicket(Ticket ticket) {
+        return ticketRepository.save(ticket);
     }
 
     @Transactional
-
-    public void updateTicketType(UUID ticketId, String ticketType) {
-        ticketDAO.updateTicketType(ticketId, ticketType);
+    public void updateTicketType(UUID ticketId, TicketType ticketType) {
+        ticketRepository.updateTicketTypeById(ticketId, ticketType);
     }
 
     public List<BusTicket> getTicketFromLocalFile() {
