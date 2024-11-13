@@ -16,10 +16,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
@@ -28,7 +26,7 @@ public class UserServiceTests {
 
   @Mock private TicketRepository ticketRepository;
 
-  @InjectMocks private UserService userService;
+  private UserService userService;
 
   private UUID userId;
   private User user;
@@ -37,7 +35,7 @@ public class UserServiceTests {
   public void setup() {
     userId = UUID.randomUUID();
     user = new User("Test User", true);
-    ReflectionTestUtils.setField(userService, "allowUserUpdateAndTicketCreate", true);
+    userService = new UserService(userRepository, ticketRepository, true);
   }
 
   @Test
@@ -46,7 +44,7 @@ public class UserServiceTests {
 
     User savedUser = userService.saveUser(user);
 
-    assertNotNull(savedUser);
+    assertEquals(user, savedUser);
     verify(userRepository, times(1)).save(user);
   }
 
@@ -58,10 +56,10 @@ public class UserServiceTests {
 
   @Test
   void saveUser_WhenUserNameIsEmpty_ShouldThrowEmptyNameFieldException() {
-    User user1 = new User("   ", false);
+    User userWithEmptyName = new User("   ", false);
 
-    assertThrows(EmptyNameFieldException.class, () -> userService.saveUser(user1));
-    verify(userRepository, never()).save(user1);
+    assertThrows(EmptyNameFieldException.class, () -> userService.saveUser(userWithEmptyName));
+    verify(userRepository, never()).save(userWithEmptyName);
   }
 
   @Test
@@ -89,24 +87,24 @@ public class UserServiceTests {
 
   @Test
   void getUsers_WhenUsersExist_ShouldReturnUsers() {
-    List<User> users = List.of(user, user, user);
-    when(userRepository.findAll()).thenReturn(users);
+    List<User> expectedUsersList = List.of(user, user, user);
+    when(userRepository.findAll()).thenReturn(expectedUsersList);
 
-    List<User> result = userService.getUsers();
+    List<User> actualUsersList = userService.getUsers();
 
-    assertEquals(users, result);
+    assertEquals(expectedUsersList, actualUsersList);
     verify(userRepository, times(1)).findAll();
   }
 
   @Test
   void getUsers_WhenNoUsersFound_ShouldReturnEmptyList() {
-    List<User> users = List.of();
+    List<User> expectedUsersList = List.of();
 
-    when(userRepository.findAll()).thenReturn(users);
+    when(userRepository.findAll()).thenReturn(expectedUsersList);
 
-    List<User> result = userService.getUsers();
+    List<User> actualUsersList = userService.getUsers();
 
-    assertEquals(users, result);
+    assertEquals(expectedUsersList, actualUsersList);
     verify(userRepository, times(1)).findAll();
   }
 
@@ -155,9 +153,9 @@ public class UserServiceTests {
   @Test
   void
       updateUserStatusAndCreateTicket_WhenUpdatingIsNotAllowed_ShouldThrowUserUpdateNotAllowedException() {
-    Ticket ticket = new Ticket();
+    userService = new UserService(userRepository, ticketRepository, false);
 
-    ReflectionTestUtils.setField(userService, "allowUserUpdateAndTicketCreate", false);
+    Ticket ticket = new Ticket();
 
     assertThrows(
         UserUpdateNotAllowedException.class,
