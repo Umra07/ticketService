@@ -1,23 +1,23 @@
-//package com.jfb.tickets.config;
+// package com.jfb.tickets.config;
 //
-//import org.postgresql.ds.PGSimpleDataSource;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.context.annotation.*;
+// import org.postgresql.ds.PGSimpleDataSource;
+// import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.context.annotation.*;
 //
-//import com.jfb.tickets.dao.TicketDAO;
-//import com.jfb.tickets.dao.UserDAO;
-//import com.jfb.tickets.service.TicketService;
-//import com.jfb.tickets.service.UserService;
-//import org.springframework.jdbc.core.JdbcTemplate;
-//import org.springframework.jdbc.support.JdbcTransactionManager;
-//import org.springframework.transaction.annotation.EnableTransactionManagement;
+// import com.jfb.tickets.dao.TicketDAO;
+// import com.jfb.tickets.dao.UserDAO;
+// import com.jfb.tickets.service.TicketService;
+// import com.jfb.tickets.service.UserService;
+// import org.springframework.jdbc.core.JdbcTemplate;
+// import org.springframework.jdbc.support.JdbcTransactionManager;
+// import org.springframework.transaction.annotation.EnableTransactionManagement;
 //
-//import javax.sql.DataSource;
+// import javax.sql.DataSource;
 //
-//@Configuration
-//@EnableTransactionManagement
-//@PropertySource("classpath:application.properties")
-//public class TicketsContextConfiguration {
+// @Configuration
+// @EnableTransactionManagement
+// @PropertySource("classpath:application.properties")
+// public class TicketsContextConfiguration {
 //
 //    @Value("${db.url}")
 //    private String url;
@@ -66,4 +66,4 @@
 //    public UserService userService() {
 //        return new UserService(userDAO(), ticketDAO());
 //    }
-//}
+// }

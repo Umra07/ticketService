@@ -1,36 +1,32 @@
 package com.jfb.tickets.model;
 
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Column;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.RequiredArgsConstructor;
-
+import jakarta.persistence.MappedSuperclass;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @MappedSuperclass
 @Getter
 @Setter
 @RequiredArgsConstructor
 public abstract class BaseModel implements Printable {
-    @NonNull
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private UUID id = UUID.randomUUID();
 
-    @NonNull
-    @Column(name = "creation_time")
-    private Instant creationTime = Instant.now();
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", nullable = false)
+  private UUID id = UUID.randomUUID();
 
-    @Override
-    public void print() {
-        System.out.println("Print content in console.");
-    }
+  @Column(name = "creation_time", nullable = false)
+  private Instant creationTime = Instant.now();
+
+  @Override
+  public void print() {
+    System.out.println("Print content in console.");
+  }
 }
